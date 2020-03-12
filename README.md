@@ -1,6 +1,10 @@
 # terraform-all
 terraform all with aws
 
+Iterative examples to setup aws using terraform. 
+
+Each folder ( not module ) will have all resources setup in previous folder.
+
 **How to run?**
 
 
