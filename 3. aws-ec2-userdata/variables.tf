@@ -11,8 +11,13 @@ variable "instance_type" {
 }
 
 variable "device_name" {
-  default = "/dev/xvdh"
+  default = "/dev/sdh"
 }
 variable "key_name" {
   default = "ec2-keys"
+}
+
+variable "dataUmount" {
+  type = string
+  default = "echo '***unmount***' && sudo umount /mnt/ec2-external-ebs/ "
 }

@@ -21,7 +21,27 @@ resource "aws_ebs_volume" "ebs_vol" {
 }
 
 resource "aws_volume_attachment" "ebs_vol_att" {
-  device_name = "/dev/sdh"
+  device_name = var.device_name
   volume_id   = aws_ebs_volume.ebs_vol.id
   instance_id = aws_instance.ec2_with_ebs.id
+}
+
+## Volume unmount before terraform destroy
+resource "null_resource" "ebs_unmount" {
+  depends_on = [aws_volume_attachment.ebs_vol_att, aws_instance.ec2_with_ebs]
+  
+  ## run unmount commands when destroying the data volume
+  provisioner "remote-exec" {
+    when = destroy
+    on_failure = continue
+    connection {
+      type = "ssh"
+      agent = false
+      timeout = "60s"
+      host = aws_instance.ec2_with_ebs.public_ip
+      user = "ec2-user"
+      private_key = file("ec2-keys.ppk")
+    }
+    inline = [var.dataUmount]
+  }
 }
