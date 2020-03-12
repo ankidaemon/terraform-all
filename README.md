@@ -1,6 +1,12 @@
 # terraform-all
 terraform all with aws
 
+>terraform {
+
+>  required_version = ">= 0.12"
+  
+>}
+
 Iterative examples to setup aws using terraform. 
 
 Each folder ( not module ) will have all resources setup in previous folder.
