@@ -23,6 +23,13 @@ resource "aws_security_group" "custom_secuity_group_pub" {
     cidr_blocks =  [var.cidr_allow_all]
   }
 
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = [var.private_subnet_cidr]
+  }
+
   vpc_id=aws_vpc.custom_vpc.id
 
   tags = {
@@ -33,13 +40,6 @@ resource "aws_security_group" "custom_secuity_group_pub" {
 resource "aws_security_group" "custom_secuity_group_pri"{
   name = "custom_secuity_group_private_subnet"
   description = "Allow traffic from custom_secuity_group_pub subnet"
-
-  ingress {
-    from_port = 3306
-    to_port = 3306
-    protocol = var.tcp
-    cidr_blocks = [var.public_subnet_cidr]
-  }
 
   ingress {
     from_port = var.ssh_port

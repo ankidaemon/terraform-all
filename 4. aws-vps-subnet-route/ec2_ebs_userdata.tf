@@ -55,6 +55,7 @@ resource "aws_instance" "private_instance" {
   subnet_id = aws_subnet.custom_private_subnet.id
   vpc_security_group_ids = [aws_security_group.custom_secuity_group_pri.id]
   source_dest_check = false
+  key_name = var.key_name
 
   tags = {
     Name = "Terraform private_instance"
